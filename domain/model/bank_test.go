@@ -1,9 +1,11 @@
 package model_test
 
 import (
-	uuid "github.com./satori/go.uuid"
-	"github.com/stretchr/testfy/require"
 	"testing"
+
+	"github.com/leoluzh/codepix-go/domain/model"
+	uuid "github.com/satori/go.uuid"
+	"github.com/stretchr/testify/require"
 )
 
 func TestModel_NewBank(t *testing.T) {

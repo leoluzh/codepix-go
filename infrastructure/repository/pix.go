@@ -2,6 +2,7 @@ package repository
 
 import (
 	"fmt"
+
 	"github.com/leoluzh/codepix-go/domain/model"
 	"gorm.io/gorm"
 )
@@ -16,11 +17,11 @@ import (
 
 type PixKeyRepositoryDb struct {
 	//db connection
-	DB *gorm.DB
+	Db *gorm.DB
 }
 
 func (r PixKeyRepositoryDb) AddBank(bank *model.Bank) error {
-	err := r.db.Create(bank).Error
+	err := r.Db.Create(bank).Error
 	if err != nil {
 		return err
 	}
@@ -28,7 +29,7 @@ func (r PixKeyRepositoryDb) AddBank(bank *model.Bank) error {
 }
 
 func (r PixKeyRepositoryDb) AddAccount(account *model.Account) error {
-	err := r.db.Create(account).Error
+	err := r.Db.Create(account).Error
 	if err != nil {
 		return err
 	}
@@ -36,7 +37,7 @@ func (r PixKeyRepositoryDb) AddAccount(account *model.Account) error {
 }
 
 func (r PixKeyRepositoryDb) RegisterKey(pixKey *model.PixKey) error {
-	err := r.db.Create(pixKey).Error
+	err := r.Db.Create(pixKey).Error
 	if err != nil {
 		return err
 	}
@@ -45,9 +46,9 @@ func (r PixKeyRepositoryDb) RegisterKey(pixKey *model.PixKey) error {
 
 func (r PixKeyRepositoryDb) FindKeyById(key string, kind string) (*model.PixKey, error) {
 
-	var pixKey model.PixelKey
+	var pixKey model.PixKey
 	//preload - same concept of fetch eager - hibernate
-	r.DB.Preload("Account.Bank").First(&pixKey, " kind = ? AND key = ?", kind, key)
+	r.Db.Preload("Account.Bank").First(&pixKey, " kind = ? AND key = ?", kind, key)
 
 	//verify if return result
 	if pixKey.ID == "" {
@@ -61,7 +62,7 @@ func (r PixKeyRepositoryDb) FindKeyById(key string, kind string) (*model.PixKey,
 func (r PixKeyRepositoryDb) FindAccount(id string) (*model.Account, error) {
 	var account model.Account
 	//preload
-	r.DB.Preload("Bank").First(&account, " id = ? ", id)
+	r.Db.Preload("Bank").First(&account, " id = ? ", id)
 
 	if account.ID == "" {
 		return nil, fmt.Errorf("Account not found")
@@ -74,7 +75,7 @@ func (r PixKeyRepositoryDb) FindAccount(id string) (*model.Account, error) {
 func (r PixKeyRepositoryDb) FindBank(id string) (*model.Bank, error) {
 	var bank model.Bank
 	//preload
-	r.DB.Preload("").First(&bank, " id = ? ", id)
+	r.Db.Preload("").First(&bank, " id = ? ", id)
 
 	if bank.ID == "" {
 		return nil, fmt.Errorf("Bank not found")

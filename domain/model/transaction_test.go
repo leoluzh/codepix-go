@@ -1,10 +1,11 @@
 package model_test
 
 import (
+	"testing"
+
 	"github.com/leoluzh/codepix-go/domain/model"
 	uuid "github.com/satori/go.uuid"
 	"github.com/stretchr/testify/require"
-	"testing"
 )
 
 func TestModel_NewTransaction(t *testing.T) {
@@ -36,7 +37,7 @@ func TestModel_NewTransaction(t *testing.T) {
 	require.Equal(t, transaction.Amount, amount)
 	require.Equal(t, transaction.Status, statusTransaction)
 	require.Equal(t, transaction.Description, "Custom description")
-	require.Equal(t, transaction.CancelDescription)
+	require.Empty(t, transaction.CancelDescription)
 
 	pixKeySameAccount, err := model.NewPixKey(kind, account, key)
 

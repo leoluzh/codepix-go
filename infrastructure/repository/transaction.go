@@ -2,6 +2,7 @@ package repository
 
 import (
 	"fmt"
+
 	"github.com/leoluzh/codepix-go/domain/model"
 	"gorm.io/gorm"
 )
@@ -24,7 +25,7 @@ func (r *TransactionRepositoryDb) Register(transaction *model.Transaction) error
 	return nil
 }
 
-func (r *TransactionRepositoryDb) Save(transaction *Transaction) error {
+func (r *TransactionRepositoryDb) Save(transaction *model.Transaction) error {
 	err := r.Db.Save(transaction).Error
 	if err != nil {
 		return err
@@ -32,7 +33,7 @@ func (r *TransactionRepositoryDb) Save(transaction *Transaction) error {
 	return nil
 }
 
-func (r *TransactionRepositoryDb) FindBy(id string) (*Transaction, error) {
+func (r *TransactionRepositoryDb) FindBy(id string) (*model.Transaction, error) {
 	var transaction model.Transaction
 	r.Db.Preload("AccountFrom.Bank").First(&transaction, " id = ? ", id)
 	if transaction.ID == "" {
