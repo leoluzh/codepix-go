@@ -8,9 +8,9 @@ import (
 
 type Bank struct {
 	Base     `valid:"required"`
-	Code     string     `json:"code" valid:"notnull"`
-	Name     string     `json:"name" valid:"notnull"`
-	Accounts []*Account `valid:"-"`
+	Code     string     `json:"code" valid:"notnull" gorm:"column:code; type:varchar(20); not null"`
+	Name     string     `json:"name" valid:"notnull" gorm:"column:name; type:varchar(255); not null" `
+	Accounts []*Account `valid:"-" gorm:"ForeignKey:BankID"`
 }
 
 func (bank *Bank) isValid() error {
