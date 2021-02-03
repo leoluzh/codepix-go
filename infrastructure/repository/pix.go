@@ -3,8 +3,8 @@ package repository
 import (
 	"fmt"
 
+	"github.com/jinzhu/gorm"
 	"github.com/leoluzh/codepix-go/domain/model"
-	"gorm.io/gorm"
 )
 
 // type PixKeyRepository {
@@ -36,15 +36,15 @@ func (r PixKeyRepositoryDb) AddAccount(account *model.Account) error {
 	return nil
 }
 
-func (r PixKeyRepositoryDb) RegisterKey(pixKey *model.PixKey) error {
+func (r PixKeyRepositoryDb) RegisterKey(pixKey *model.PixKey) (*model.PixKey, error) {
 	err := r.Db.Create(pixKey).Error
 	if err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+	return pixKey, nil
 }
 
-func (r PixKeyRepositoryDb) FindKeyById(key string, kind string) (*model.PixKey, error) {
+func (r PixKeyRepositoryDb) FindKeyByKind(key string, kind string) (*model.PixKey, error) {
 
 	var pixKey model.PixKey
 	//preload - same concept of fetch eager - hibernate

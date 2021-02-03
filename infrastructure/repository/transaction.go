@@ -3,8 +3,8 @@ package repository
 import (
 	"fmt"
 
+	"github.com/jinzhu/gorm"
 	"github.com/leoluzh/codepix-go/domain/model"
-	"gorm.io/gorm"
 )
 
 // type TransactionRepository interface {

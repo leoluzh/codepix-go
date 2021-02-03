@@ -1,13 +1,15 @@
-package 
+package grpc
 
-import(
+import (
+	"context"
+
 	"github.com/leoluzh/codepix-go/application/grpc/pb"
-	"github.com/leoluhz/codepix-go/application/usecase"
+	"github.com/leoluzh/codepix-go/application/usecase"
 )
 
 type PixGrpcService struct {
 	PixUseCase usecase.PixUseCase
-	pb.UmimplementedPixServiceServer
+	pb.UnimplementedPixServiceServer
 }
 
 func (p *PixGrpcService) RegisterPixKey(ctx context.Context, in *pb.PixKeyRegistration) (*pb.PixKeyCreatedResult, error) {
@@ -15,12 +17,12 @@ func (p *PixGrpcService) RegisterPixKey(ctx context.Context, in *pb.PixKeyRegist
 	if err != nil {
 		return &pb.PixKeyCreatedResult{
 			Status: "not created",
-			Error: err.Error(),
+			Error:  err.Error(),
 		}, err
 	}
 
 	return &pb.PixKeyCreatedResult{
-		Id: key.ID,
+		Id:     key.ID,
 		Status: "created",
 	}, nil
 }
@@ -32,10 +34,10 @@ func (p *PixGrpcService) Find(ctx context.Context, in *pb.PixKey) (*pb.PixKeyInf
 	}
 
 	return &pb.PixKeyInfo{
-		Id:        pixKey.ID,
-		Kind:      pixKey.Kind,
-		Key:       pixKey.Key,
-		Account:   &pb.Account{
+		Id:   pixKey.ID,
+		Kind: pixKey.Kind,
+		Key:  pixKey.Key,
+		Account: &pb.Account{
 			AccountId:     pixKey.AccountID,
 			AccountNumber: pixKey.Account.Number,
 			BankId:        pixKey.Account.BankID,
