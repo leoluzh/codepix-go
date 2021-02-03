@@ -48,8 +48,7 @@ func (transaction *Transaction) isValid() error {
 
 	if transaction.Status != TransactionPeding &&
 		transaction.Status != TransactionCompleted &&
-		transaction.Status != TransactionError &&
-		transaction.Status != TransactionConfirmed {
+		transaction.Status != TransactionError {
 		return errors.New("invalid status for the transaction")
 	}
 
@@ -101,7 +100,7 @@ func (transaction *Transaction) Confirm() error {
 }
 
 func (transaction *Transaction) Cancel(description string) error {
-	transaction.Status = TransactionCanceled
+	transaction.Status = TransactionError
 	transaction.UpdatedAt = time.Now()
 	transaction.CancelDescription = description
 	err := transaction.isValid()

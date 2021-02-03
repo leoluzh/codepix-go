@@ -14,7 +14,7 @@ func TestModel_NewAccount(t *testing.T) {
 	name := "Caixa Economica Federal"
 	bank, err := model.NewBank(code, name)
 
-	accountNumber := ""
+	accountNumber := "#--abc123--#"
 	ownerName := "leoluzh"
 	account, err := model.NewAccount(bank, accountNumber, ownerName)
 

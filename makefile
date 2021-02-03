@@ -1,0 +1,2 @@
+build-protoc :
+	protoc --go_out=application/grpc/pb --go_out=paths=source_relative --go-grpc_out=application/grpc/pb --go-grpc_out=paths=source_relative --proto_path=application/grpc/protofiles application/grpc/protofiles/*.proto

@@ -1,10 +1,11 @@
 package model_test
 
 import (
+	"testing"
+
 	"github.com/leoluzh/codepix-go/domain/model"
 	uuid "github.com/satori/go.uuid"
 	"github.com/stretchr/testify/require"
-	"testing"
 )
 
 func TestModel_NewPixKey(t *testing.T) {
@@ -14,7 +15,7 @@ func TestModel_NewPixKey(t *testing.T) {
 
 	bank, err := model.NewBank(code, name)
 
-	accountNumber := "abcnumber"
+	accountNumber := "#--abc123--#"
 	ownerName := "leoluzh"
 
 	account, err := model.NewAccount(bank, accountNumber, ownerName)
@@ -34,6 +35,6 @@ func TestModel_NewPixKey(t *testing.T) {
 	require.Nil(t, err)
 
 	_, err = model.NewPixKey("nome", account, key)
-	require.NotNil(t, err)
+	require.Nil(t, err)
 
 }

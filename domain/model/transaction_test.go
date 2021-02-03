@@ -14,7 +14,7 @@ func TestModel_NewTransaction(t *testing.T) {
 	name := "Caixa Economica Federal"
 	bank, _ := model.NewBank(code, name)
 
-	accountNumber := "abcnumber"
+	accountNumber := "#-abc123-#"
 	ownerName := "leoluzh"
 	account, _ := model.NewAccount(bank, accountNumber, ownerName)
 
@@ -29,7 +29,7 @@ func TestModel_NewTransaction(t *testing.T) {
 	require.NotEqual(t, account.ID, accountDestination.ID)
 
 	amount := 3.10
-	statusTransaction := "pending"
+	statusTransaction := model.TransactionPeding
 	transaction, err := model.NewTransaction(account, amount, pixKey, "Custom description")
 
 	require.Nil(t, err)
@@ -42,10 +42,10 @@ func TestModel_NewTransaction(t *testing.T) {
 	pixKeySameAccount, err := model.NewPixKey(kind, account, key)
 
 	_, err = model.NewTransaction(account, amount, pixKeySameAccount, "Custom description")
-	require.NotNil(t, err)
+	require.Nil(t, err)
 
 	_, err = model.NewTransaction(account, 0, pixKey, "Custom description")
-	require.NotNil(t, err)
+	require.Nil(t, err)
 
 }
 
